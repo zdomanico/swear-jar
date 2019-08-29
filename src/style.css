@@ -29,6 +29,11 @@ body  {
 	background-color:black;
 }
 
+.scroll {
+	overflow-x:hidden;
+	
+}
+
 #progress-bar-div{
 	display:flex;
 }

@@ -19,7 +19,17 @@ exGroup =
     , name = "That's What She Said."
     , users = [ User "jim" (Guid "1"), User "pam" (Guid "2"), User "michael" (Guid "3"), User "dwight" (Guid "4") ]
     , admins = [ User "jim" (Guid "1") ]
-    , transactions = [ Transaction (Guid "1") (User "jim" (Guid "1")) 25 "" (Time.millisToPosix 0) ]
+    , transactions =
+        [ Transaction (Guid "1") (User "jim" (Guid "1")) 25 "Put money in thy purse" (Time.millisToPosix 0)
+        , Transaction (Guid "1") (User "jim" (Guid "1")) 25 "Put money in thy purse" (Time.millisToPosix 0)
+        , Transaction (Guid "1") (User "jim" (Guid "1")) 25 "Put money in thy purse" (Time.millisToPosix 0)
+        , Transaction (Guid "1") (User "jim" (Guid "1")) 25 "Put money in thy purse" (Time.millisToPosix 0)
+        , Transaction (Guid "1") (User "jim" (Guid "1")) 25 "Put money in thy purse" (Time.millisToPosix 0)
+        , Transaction (Guid "1") (User "jim" (Guid "1")) 25 "Put money in thy purse" (Time.millisToPosix 0)
+        , Transaction (Guid "1") (User "jim" (Guid "1")) 25 "Put money in thy purse" (Time.millisToPosix 0)
+        , Transaction (Guid "1") (User "jim" (Guid "1")) 25 "Put money in thy purse" (Time.millisToPosix 0)
+        , Transaction (Guid "1") (User "jim" (Guid "1")) 25 "Put money in thy purse" (Time.millisToPosix 0)
+        ]
     , targets = [ Target 10 "small target", Target 100 "big target", Target 50 "medium target" ]
     }
 
@@ -61,11 +71,24 @@ constructGradient f =
     "linear-gradient(to top,#0000aaff " ++ String.fromFloat f ++ "%, #ffffff00 " ++ String.fromFloat f ++ "%)"
 
 
+transactionDiv : Transaction -> Html msg
+transactionDiv t =
+    div [ style "margin" "10px" ]
+        [ text (t.user.username ++ " added " ++ String.fromFloat t.amount ++ " to the jar.")
+        , div [ style "font-style" "italic" ] [ text t.note ]
+        ]
+
+
+transactionScroll : List Transaction -> Html msg
+transactionScroll t =
+    div [ class "scroll", style "max-height" "100px" ] (map transactionDiv t)
+
+
 groupBody model group =
     [ div [ class "title", id "group_name" ] [ text ("Group Name: " ++ group.name) ]
     , div [ class "usernames", id "group_members" ] [ text (list_usernames group.users) ]
     , div [ class "usernames", id "group_admins" ] [ text (list_admins group.admins) ]
-    , button [] [ text "Login" ]
+    , transactionScroll group.transactions
     , div [ id "progress-bar-div", style "height" "200px", style "max-width" "100px", style "margin" "auto", style "margin-top" "30px" ]
         [ div [ style "background-image" (constructGradient (100 * (funds group / maxTarget group))), class "progress-bar", style "margin-top" "auto" ] (targetDivs group) ]
     ]
