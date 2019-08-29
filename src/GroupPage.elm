@@ -5,7 +5,8 @@ import Html.Attributes exposing (class, id, style, value)
 import Html.Events exposing (onClick)
 import List exposing (concat, map, maximum, sum)
 import Maybe exposing (withDefault)
-import String exposing (fromFloat)
+import Messages exposing (..)
+import String exposing (String, fromFloat)
 import Time
 import Types exposing (Group, Guid, Target, Transaction, TransactionRequest, User)
 
@@ -111,16 +112,27 @@ transactionRequestScroll t =
     div [ class "scroll", style "max-height" "100%" ] (map transactionRequestDiv t)
 
 
-groupBody model group =
-    [ div [ class "group-page-container" ]
-        [ div [ class "title", id "group_name" ] [ text ("Group Name: " ++ group.name) ]
-        , div [ class "usernames", id "group_members" ] [ text (list_usernames group.users) ]
-        , div [ class "usernames", id "group_admins" ] [ text (list_admins group.admins) ]
-        , div [ style "display" "flex", style "max-width" "300px", style "max-height" "300px", style "margin" "auto" ]
-            [ transactionScroll group.transactions
-            , transactionRequestScroll group.transactionRequests
-            , div [ id "progress-bar-div", style "height" "200px", style "width" "100px", style "margin" "auto", style "margin-top" "30px" ]
-                [ div [ style "background-image" (constructGradient (100 * (funds group / maxTarget group))), class "progress-bar", style "margin-top" "auto" ] (targetDivs group) ]
+addMoneyButton : User -> Html Message
+addMoneyButton user =
+    button [ style "width" "100px", style "height" "50px", onClick AddMoneyModal ] [ text "Add money to the jar" ]
+
+
+groupBody model =
+    case model.group of
+        Nothing ->
+            []
+
+        Just group ->
+            [ div [ class "group-page-container" ]
+                [ div [ class "title", id "group_name" ] [ text ("Group Name: " ++ group.name) ]
+                , div [ class "usernames", id "group_members" ] [ text (list_usernames group.users) ]
+                , div [ class "usernames", id "group_admins" ] [ text (list_admins group.admins) ]
+                , div [ style "display" "flex", style "max-width" "500px", style "max-height" "300px", style "margin" "auto" ]
+                    [ transactionScroll group.transactions
+                    , div [ id "progress-bar-div", style "height" "200px", style "width" "100px", style "margin-top" "30px" ]
+                        [ div [ style "background-image" (constructGradient (100 * (funds group / maxTarget group))), class "progress-bar", style "margin-top" "auto" ] (targetDivs group) ]
+                    , transactionRequestScroll group.transactionRequests
+                    ]
+                , addMoneyButton (genericUser 1)
+                ]
             ]
-        ]
-    ]

@@ -31,6 +31,9 @@ body  {
 
 .scroll {
 	overflow-x:hidden;
+	outline:solid;
+	margin-left:5%;
+	margin-right:5%;
 
 }
 
