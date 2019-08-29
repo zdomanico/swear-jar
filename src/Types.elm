@@ -20,6 +20,7 @@ type alias Group =
     , users : List User
     , admins : List User
     , transactions : List Transaction
+    , transactionRequests : List TransactionRequest
     , targets : List Target
     }
 

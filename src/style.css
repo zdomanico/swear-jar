@@ -31,9 +31,6 @@ body  {
 
 .scroll {
 	overflow-x:hidden;
-	
+
 }
 
-#progress-bar-div{
-	display:flex;
-}

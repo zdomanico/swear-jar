@@ -6,8 +6,10 @@ import Html.Events exposing (onClick)
 
 
 loginBody model =
-    [ div []
-        [ input [ type_ "text", placeholder "Username" ] [] ]
-    , div [] [ input [ type_ "password", placeholder "Password" ] [] ]
-    , button [] [ text "Login" ]
+    [ div [ class "login-page-container" ]
+        [ div []
+            [ input [ type_ "text", placeholder "Username" ] [] ]
+        , div [] [ input [ type_ "password", placeholder "Password" ] [] ]
+        , button [] [ text "Login" ]
+        ]
     ]
