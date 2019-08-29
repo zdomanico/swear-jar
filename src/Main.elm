@@ -42,16 +42,11 @@ view model =
     { title = "Swearjar"
     , body =
         concat
-            [ style1
-            , LoginPage.loginBody model
+            [ LoginPage.loginBody model
             , [ div [ style "height" "100px" ] [] ]
             , GroupPage.groupBody model GroupPage.exGroup
             ]
     }
-
-
-style1 =
-    [ node "link" [ rel "stylesheet", href "styles.css" ] [] ]
 
 
 onUrlChange url =
