@@ -24,7 +24,7 @@ main =
 
 init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Message )
 init flags url key =
-    ( Model Nothing (Just GroupPage.exGroup), Cmd.none )
+    ( Model Nothing Nothing "" "", Cmd.none )
 
 
 urlChange url =
@@ -38,6 +38,8 @@ urlRequested request =
 type alias Model =
     { user : Maybe User
     , group : Maybe Group
+    , username : String
+    , password : String
     }
 
 
@@ -52,6 +54,18 @@ update msg model =
 
         DoNothing ->
             ( model, Cmd.none )
+
+        Login ->
+            ( Model Nothing (Just GroupPage.exGroup) "" "", Cmd.none )
+
+        FailedLogin ->
+            ( model, Cmd.none )
+
+        UpdateUsernameField a ->
+            ( { model | username = a }, Cmd.none )
+
+        UpdatePasswordField a ->
+            ( { model | password = a }, Cmd.none )
 
 
 view : Model -> Browser.Document Message
