@@ -24,7 +24,7 @@ main =
 
 init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Message )
 init flags url key =
-    ( Model Nothing Nothing "" "", Cmd.none )
+    ( Model Nothing Nothing "" "" False, Cmd.none )
 
 
 urlChange url =
@@ -40,6 +40,7 @@ type alias Model =
     , group : Maybe Group
     , username : String
     , password : String
+    , failedLogin : Bool
     }
 
 
@@ -56,10 +57,10 @@ update msg model =
             ( model, Cmd.none )
 
         Login ->
-            ( Model (Just rootUser) (Just GroupPage.exGroup) "" "", Cmd.none )
+            ( { model | user = Just rootUser, group = Just GroupPage.exGroup }, Cmd.none )
 
         FailedLogin ->
-            ( model, Cmd.none )
+            ( { model | failedLogin = True }, Cmd.none )
 
         UpdateUsernameField a ->
             ( { model | username = a }, Cmd.none )
