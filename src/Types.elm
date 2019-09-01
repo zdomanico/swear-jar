@@ -1,4 +1,4 @@
-module Types exposing (Group, Guid, Target, Transaction, TransactionRequest, User)
+module Types exposing (Group, Guid, Target, Transaction, TransactionRequest, User, rootUser)
 
 import Time
 
@@ -12,6 +12,11 @@ type alias User =
     { username : String
     , id : Guid
     }
+
+
+rootUser : User
+rootUser =
+    User "root" (Guid "null")
 
 
 type alias Group =

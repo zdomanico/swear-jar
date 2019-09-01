@@ -9,7 +9,7 @@ import Html.Events exposing (onClick)
 import List exposing (concat)
 import LoginPage
 import Messages exposing (..)
-import Types exposing (Group, User)
+import Types exposing (Group, User, rootUser)
 import Url exposing (Url)
 
 
@@ -56,7 +56,7 @@ update msg model =
             ( model, Cmd.none )
 
         Login ->
-            ( Model Nothing (Just GroupPage.exGroup) "" "", Cmd.none )
+            ( Model (Just rootUser) (Just GroupPage.exGroup) "" "", Cmd.none )
 
         FailedLogin ->
             ( model, Cmd.none )
